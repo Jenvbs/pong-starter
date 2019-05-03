@@ -8,3 +8,10 @@ export const KEYS = {
   down: 'ArrowDown',
   spaceBar: ' ',
 }
+
+export const SETTINGS = {
+  paddleWidth: 8,
+  paddleHeight: 56,
+  boardGap: 10,
+  ballRadius: 8,
+}
