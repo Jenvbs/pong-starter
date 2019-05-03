@@ -13,6 +13,7 @@ export default class Game {
     this.paddleHeight = SETTINGS.paddleHeight
     this.boardGap = SETTINGS.boardGap
     this.ballRadius = SETTINGS.ballRadius
+    this.paused = false
 
     this.gameElement = document.getElementById(elementID)
     this.board = new Board(this.width, this.height)
@@ -37,9 +38,17 @@ export default class Game {
       KEYS.up,
       KEYS.down
     )
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === KEYS.spaceBar) {
+        this.paused = !this.paused
+      }
+    })
   }
 
   render() {
+    if (this.paused) return
+
     // Delete all existing childeren of the gameElement on each render.
     this.gameElement.innerHTML = ''
 
