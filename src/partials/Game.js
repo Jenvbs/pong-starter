@@ -39,11 +39,6 @@ export default class Game {
     )
   }
 
-  reset() {
-    this.x = this.boardWidth / 2
-    this.y = this.boardHeight / 2
-  }
-
   render() {
     // Delete all existing childeren of the gameElement on each render.
     this.gameElement.innerHTML = ''
