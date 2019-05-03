@@ -1,4 +1,5 @@
 import { SVG_NS } from '../settings'
+import Helpers from '../helpers'
 
 export default class Paddle {
   constructor(boardHeight, width, height, x, y, moveUpKey, moveDownKey) {

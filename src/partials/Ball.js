@@ -1,4 +1,5 @@
 import { SVG_NS } from '../settings'
+import helpers from '../helpers'
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -44,11 +45,48 @@ export default class Ball {
     }
   }
 
-  render(svg) {
+  paddleBounce(player1, player2) {
+    if (this.vx > 0) {
+      // We're moving to the right
+      // We care about player 2
+      const [leftX, _, topY, bottomY] = helpers.coordinates(
+        player2.x,
+        player2.y,
+        player2.width,
+        player2.height
+      )
+
+      if (
+        this.x + this.radius >= leftX && // right edge of ball is >= left edge of paddle
+        (this.y >= topY && this.y <= bottomY) // The ball y is >= paddle top and <= paddle bottom
+      ) {
+        this.vx = -this.vx
+      }
+    } else {
+      // We're moving to the right
+      // We care about player 1
+      const [_, rightX, topY, bottomY] = helpers.coordinates(
+        player1.x,
+        player1.y,
+        player1.width,
+        player1.height
+      )
+
+      if (
+        this.x - this.radius <= rightX && // left edge of ball is <= right edge of paddle
+        (this.y >= topY && this.y <= bottomY) // The ball y is >= paddle top and <= paddle bottom
+      ) {
+        this.vx = -this.vx
+      }
+    }
+  }
+
+  render(svg, player1, player2) {
     this.x += this.vx
     this.y += this.vy
 
     this.wallBounce()
+    this.paddleBounce(player1, player2)
 
     // Draw ball
     const circle = document.createElementNS(SVG_NS, 'circle')
