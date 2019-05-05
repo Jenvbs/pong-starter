@@ -7,7 +7,7 @@ export default class Ball {
     this.boardWidth = boardWidth
     this.boardHeight = boardHeight
     this.direction = 1
-
+    this.speed = 10
     this.vx = 0
     this.vy = 0
     this.reset()
@@ -81,12 +81,21 @@ export default class Ball {
     }
   }
 
+  scorePoint() {
+    if (this.vx <= 0 || this.vx >= this.boardWidth) { // scoring a point
+      this.speed = 0;
+      this.x = this.boardWidth / 2;
+      this.y = this.boardHeight / 2;
+    }
+  }
+
   render(svg, player1, player2) {
     this.x += this.vx
     this.y += this.vy
 
     this.wallBounce()
     this.paddleBounce(player1, player2)
+    this.scorePoint()
 
     // Draw ball
     const circle = document.createElementNS(SVG_NS, 'circle')
