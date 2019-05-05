@@ -38,8 +38,10 @@ export default class Ball {
     const hitLeft = this.x - this.radius <= 0
     const hitRight = this.x + this.radius >= this.boardWidth
 
-    if (hitLeft || hitRight) {
-      this.vx = -this.vx
+    if (hitLeft || hitRight) { // ball returns to origin point when hitting wall on x-axis.
+      this.speed = 0;
+      this.x = this.boardWidth / 2;
+      this.y = this.boardHeight / 2;
     } else if (hitTop || hitBottom) {
       this.vy = -this.vy
     }
@@ -81,13 +83,7 @@ export default class Ball {
     }
   }
 
-  scorePoint() {
-    if (this.vx <= 0 || this.vx >= this.boardWidth) { // scoring a point
-      this.speed = 0;
-      this.x = this.boardWidth / 2;
-      this.y = this.boardHeight / 2;
-    }
-  }
+
 
   render(svg, player1, player2) {
     this.x += this.vx
@@ -95,7 +91,7 @@ export default class Ball {
 
     this.wallBounce()
     this.paddleBounce(player1, player2)
-    this.scorePoint()
+
 
     // Draw ball
     const circle = document.createElementNS(SVG_NS, 'circle')
