@@ -14,6 +14,7 @@ export default class Ball {
     this.startMoving()
   }
 
+
   reset() {
     this.x = this.boardWidth / 2
     this.y = this.boardHeight / 2
@@ -35,14 +36,7 @@ export default class Ball {
     const hitTop = this.y - this.radius <= 0
     const hitBottom = this.y + this.radius >= this.boardHeight
 
-    const hitLeft = this.x - this.radius <= 0
-    const hitRight = this.x + this.radius >= this.boardWidth
-
-    if (hitLeft || hitRight) { // ball returns to origin point when hitting wall on x-axis.
-      this.speed = 0;
-      this.x = this.boardWidth / 2;
-      this.y = this.boardHeight / 2;
-    } else if (hitTop || hitBottom) {
+    if (hitTop || hitBottom) {
       this.vy = -this.vy
     }
   }
@@ -83,6 +77,16 @@ export default class Ball {
     }
   }
 
+  goal() {
+    const hitLeft = this.x - this.radius <= 0
+    const hitRight = this.x + this.radius >= this.boardWidth
+
+    if (hitLeft || hitRight) { // ball returns to origin point when hitting wall on x-axis.
+      this.speed = 0;
+      this.x = this.boardWidth / 2;
+      this.y = this.boardHeight / 2;
+    }
+  }
 
 
   render(svg, player1, player2) {
@@ -91,6 +95,8 @@ export default class Ball {
 
     this.wallBounce()
     this.paddleBounce(player1, player2)
+    this.goal()
+
 
 
     // Draw ball
