@@ -9,7 +9,7 @@ export default class Scoreboard {
     this.score = 0;
   }
 
-    render(svg) {
+    render(svg, score) {
       const text = document.createElementNS(SVG_NS, 'text')
       text.setAttributeNS(null, 'x', this.x /3.5)
       text.setAttributeNS(null, 'y', this.y / 2)
@@ -18,20 +18,10 @@ export default class Scoreboard {
       text.setAttributeNS(null, 'fill', '#665')
       svg.appendChild(text)
 
-      text.textContent = this.score
+      text.innerHTML = this.score
 
       svg.appendChild(text)
 
-      const textTwo = document.createElementNS(SVG_NS, 'text')
-      textTwo.setAttributeNS(null, 'x', this.x / 1.45)
-      textTwo.setAttributeNS(null, 'y', this.y / 2)
-      textTwo.setAttributeNS(null, 'font-family', '"Silkscreen Web", monotype')
-      textTwo.setAttributeNS(null, 'font-size', this.size)
-      textTwo.setAttributeNS(null, 'fill', '#665')
-      svg.appendChild(textTwo)
-
-      textTwo.textContent = this.score
-
-      svg.appendChild(textTwo)
+      }
     }
-  }
+

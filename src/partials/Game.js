@@ -9,6 +9,7 @@ export default class Game {
     this.elementID = elementID
     this.width = width
     this.height = height
+    this.gameElement = document.getElementById(elementID)
 
     this.paddleWidth = SETTINGS.paddleWidth
     this.paddleHeight = SETTINGS.paddleHeight
@@ -16,9 +17,9 @@ export default class Game {
     this.ballRadius = SETTINGS.ballRadius
     this.paused = false
 
-    this.gameElement = document.getElementById(elementID)
     this.board = new Board(this.width, this.height)
-    this.scoreboard = new Scoreboard(this.width, this.height)
+    this.scoreP1 = new Scoreboard(600, 60, 30);
+    this.scoreP2 = new Scoreboard(1100, 60, 30);
     this.ball = new Ball(this.ballRadius, this.width, this.height)
 
     this.player1 = new Paddle(
@@ -47,7 +48,6 @@ export default class Game {
       }
     })
   }
-
   render() {
     if (this.paused) return
 
@@ -62,10 +62,12 @@ export default class Game {
     this.gameElement.appendChild(svg)
 
     // Render Stuff
-    this.board.render(svg)
-    this.scoreboard.render(svg)
-    this.player1.render(svg)
-    this.player2.render(svg)
+    this.board.render(svg);
+    this.scoreP1.render(svg, this.player1.score);
+    this.scoreP2.render(svg, this.player2.score);
+    this.player1.render(svg);
+    this.player2.render(svg);
     this.ball.render(svg, this.player1, this.player2)
+
   }
 }

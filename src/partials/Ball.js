@@ -1,27 +1,30 @@
-import { SVG_NS } from '../settings'
+import { SVG_NS, KEYS, SETTINGS } from '../settings'
 import helpers from '../helpers'
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
-    this.radius = radius
+    this.radius = radius;
     this.boardWidth = boardWidth
     this.boardHeight = boardHeight
+    this.ballColor = SETTINGS.ballColor;
     this.direction = 1
-    this.speed = 10
+    this.speed = 10;
     this.vx = 0
     this.vy = 0
+    this.score = 0
+
+    this.ping = new Audio('public/sounds/pong-01.wav')
+
     this.reset()
-    this.startMoving()
+    //this.startMoving()
+    //this.goal()
   }
 
 
-  reset() {
+  reset() { //and start moving
     this.x = this.boardWidth / 2
     this.y = this.boardHeight / 2
-  }
 
-  startMoving() {
-    // Generate a random number between -5 and 5 this ISN't 0.
     this.vy = 0
     while (this.vy === 0) {
       this.vy = Math.floor(Math.random() * 10 - 5)
@@ -32,12 +35,21 @@ export default class Ball {
     this.vx = this.direction * (6 - Math.abs(this.vy))
   }
 
+
   wallBounce() {
     const hitTop = this.y - this.radius <= 0
     const hitBottom = this.y + this.radius >= this.boardHeight
 
+    const hitLeft = this.x - this.radius <= 0
+    const hitRight = this.x + this.radius >= this.boardWidth
+
     if (hitTop || hitBottom) {
       this.vy = -this.vy
+    }
+    if (hitLeft || hitRight) { // ball returns to origin point when hitting wall on x-axis.
+      this.speed = 0;
+      this.x = this.boardWidth / 2;
+      this.y = this.boardHeight / 2;
     }
   }
 
@@ -56,7 +68,8 @@ export default class Ball {
         this.x + this.radius >= leftX && // right edge of ball is >= left edge of paddle
         (this.y >= topY && this.y <= bottomY) // The ball y is >= paddle top and <= paddle bottom
       ) {
-        this.vx = -this.vx
+        this.vx = -this.vx;
+        this.ping.play();
       }
     } else {
       // We're moving to the right
@@ -72,19 +85,10 @@ export default class Ball {
         this.x - this.radius <= rightX && // left edge of ball is <= right edge of paddle
         (this.y >= topY && this.y <= bottomY) // The ball y is >= paddle top and <= paddle bottom
       ) {
-        this.vx = -this.vx
+        this.vx = -this.vx;
+        this.ping.play();
       }
-    }
-  }
 
-  goal() {
-    const hitLeft = this.x - this.radius <= 0
-    const hitRight = this.x + this.radius >= this.boardWidth
-
-    if (hitLeft || hitRight) { // ball returns to origin point when hitting wall on x-axis.
-      this.speed = 0;
-      this.x = this.boardWidth / 2;
-      this.y = this.boardHeight / 2;
     }
   }
 
@@ -95,7 +99,6 @@ export default class Ball {
 
     this.wallBounce()
     this.paddleBounce(player1, player2)
-    this.goal()
 
 
 
@@ -104,7 +107,8 @@ export default class Ball {
     circle.setAttributeNS(null, 'r', this.radius)
     circle.setAttributeNS(null, 'cx', this.x) // x of the centre point
     circle.setAttributeNS(null, 'cy', this.y) // y of the centre point
-    circle.setAttributeNS(null, 'fill', 'white')
+    circle.setAttributeNS(null, 'fill', this.ballColor)
     svg.appendChild(circle)
+
   }
 }
