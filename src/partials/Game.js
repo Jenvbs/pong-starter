@@ -21,6 +21,7 @@ export default class Game {
     this.scoreP1 = new Scoreboard(600, 60, 30);
     this.scoreP2 = new Scoreboard(1100, 60, 30);
     this.ball = new Ball(this.ballRadius, this.width, this.height)
+    this.ball2 = new Ball(20, this.width, this.height)
 
     this.player1 = new Paddle(
       this.height,
@@ -69,5 +70,10 @@ export default class Game {
     this.player2.render(svg);
     this.ball.render(svg, this.player1, this.player2)
 
+    document.addEventListener('keydown', (e) => { // is rendering dots on the screen, not movable
+      if (e.key === KEYS.t) {
+        this.ball.render(svg, this.player1, this.player2)
+      }
+    })
   }
 }

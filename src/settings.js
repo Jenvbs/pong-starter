@@ -7,6 +7,7 @@ export const KEYS = {
   up: 'ArrowUp',
   down: 'ArrowDown',
   spaceBar: ' ',
+  t: 't',
 }
 
 export const SETTINGS = {
@@ -14,4 +15,8 @@ export const SETTINGS = {
   paddleHeight: 56,
   boardGap: 10,
   ballRadius: 8,
+  speed: 10,
+  ballColor: '#fff',
+  paddleColor: '#02d0f4',
+  boardColor: '#489',
 }

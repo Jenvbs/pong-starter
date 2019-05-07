@@ -159,6 +159,7 @@ body {
   height: 100vh;
   justify-content: center;
   width: 100%;
+  flex-direction: column;
 }
 
 h1 {
@@ -166,3 +167,15 @@ h1 {
   margin-bottom: 1rem;
   text-align: center;
 }
+
+#score {
+  height: 10vh;
+  width: 30vw;
+  /*background-color: bisque;*/
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+

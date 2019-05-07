@@ -1,5 +1,7 @@
 import { SVG_NS, KEYS, SETTINGS } from '../settings'
 import helpers from '../helpers'
+import pingSound from "../../public/sounds/pong-01.wav";
+import pongSound from "../../public/sounds/pong-02.wav";
 
 export default class Ball {
   constructor(radius, boardWidth, boardHeight) {
@@ -12,8 +14,8 @@ export default class Ball {
     this.vx = 0
     this.vy = 0
     this.score = 0
-
-    this.ping = new Audio('public/sounds/pong-01.wav')
+    this.ping = new Audio(pingSound);
+    this.pong = new Audio(pongSound);
 
     this.reset()
     //this.startMoving()
@@ -45,6 +47,7 @@ export default class Ball {
 
     if (hitTop || hitBottom) {
       this.vy = -this.vy
+      this.pong.play();
     }
     if (hitLeft || hitRight) { // ball returns to origin point when hitting wall on x-axis.
       this.speed = 0;
@@ -70,6 +73,7 @@ export default class Ball {
       ) {
         this.vx = -this.vx;
         this.ping.play();
+        window.alert("You're doing great!");
       }
     } else {
       // We're moving to the right
@@ -87,6 +91,7 @@ export default class Ball {
       ) {
         this.vx = -this.vx;
         this.ping.play();
+        window.alert("Well done!");
       }
 
     }
